@@ -177,12 +177,27 @@ def pGreedy(iCList, r):
                 improved = True
 
         if not improved:
-            break
+            break  # paragem antecipada se nenhuma melhoria
 
         currentList = bestList
         currentDist = bestDist
 
     return distCircularIC(iCList), currentDist, currentList
+
+def rGreedy(iCList, r):
+    numRestarts = 10
+    iterPerRestart = r // numRestarts
+
+    bestList = None
+    bestDist = float('inf')
+
+    for _ in range(numRestarts):
+        _, dist, candidate = pGreedy(iCList, iterPerRestart)
+        if dist < bestDist:
+            bestDist = dist
+            bestList = candidate
+
+    return distCircularIC(iCList), bestDist, bestList
 
 """
 # Generate 5 Cities
