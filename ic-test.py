@@ -26,7 +26,7 @@ drawIC(l,w)
 input("Enter para continuar... ")
 print("Optimizing...")
 
-iter = 100000
+iter = 1000000000000000000
 if len(sys.argv) > 1:
     iter = int(sys.argv[1])
 

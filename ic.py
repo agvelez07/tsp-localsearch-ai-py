@@ -1,5 +1,6 @@
 import math
 import random
+from code import interact
 
 # Global variable to keep track of the next available city ID
 next_id = 1
@@ -185,18 +186,32 @@ def pGreedy(iCList, r):
     return distCircularIC(iCList), currentDist, currentList
 
 def rGreedy(iCList, r):
-    numRestarts = 10
-    iterPerRestart = r // numRestarts
+    iterCount = 2
+    restartsLeft = r
+    restartCount = 0
 
     bestList = None
     bestDist = float('inf')
 
-    for _ in range(numRestarts):
-        _, dist, candidate = pGreedy(iCList, iterPerRestart)
+    while restartsLeft >= iterCount:
+        _, dist, candidate = pGreedy(iCList, iterCount)
         if dist < bestDist:
             bestDist = dist
             bestList = candidate
 
+       # print(f"{iterCount} iteration {restartsLeft} restarts left")
+        restartsLeft -= iterCount
+        iterCount *= 2
+        restartCount += 1
+
+    if restartsLeft > 0:
+        _, dist, candidate = pGreedy(iCList, restartsLeft)
+        if dist < bestDist:
+            bestDist = dist
+            bestList = candidate
+        #print(f"{restartsLeft} iteration {restartsLeft} restarts left")
+        restartCount += 1
+    print(f"Num de Restarts: {restartCount}")
     return distCircularIC(iCList), bestDist, bestList
 
 """
